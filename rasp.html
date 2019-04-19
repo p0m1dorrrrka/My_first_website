@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html>
+   <head>
+      <title>Расписание</title>
+      <meta charset="utf-8">
+<link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="js/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="css/stile.css">
+   </head>
+   <body>
+
+   <div class="container-fluid">
+       <div class="row" style="height: 100%">
+           <div class="col-md-6">
+               <table class="table  table-sm table-striped table-dark ">
+                   <thead>
+                   <tr>
+                       <th scope="col">День недели</th>
+                       <th scope="col">Предметы
+                   </tr>
+                   </thead>
+                   <tbody>
+                   <tr >
+                       <td class="1"   >Понедельник</td>
+                       <td class="1"  >
+                           <p>ОПИ/Диффуры</p>
+                           <p>Физ-ра</p>
+                           <p>Визуалка</p>
+                       </td>
+                       <td rowspan="5">
+
+                       </td>
+                   </tr >
+                   <tr >
+                       <td class="2"  >Вторник</td>
+                       <td class="2" >
+                           <p>ОПИ</p>
+                           <p>АК</p>
+                           <p>Числ. методы</p>
+                       </td>
+                   </tr>
+                   <tr  >
+                       <td class="3" colspan="1">Среда</td>
+                       <td class="3">
+                           <p>Визуалка</p>
+                           <p>Диффуры</p>
+                           <p>Англ.яз</p>
+                       </td>
+                   </tr>
+                   <tr class="bg" >
+                       <td class="4" colspan="1">Четверг</td>
+                       <td class="4">
+                           <p>ОПИ</p>
+                           <p>АК</p>
+                           <p>Визуалка</p>
+                           <p>Классный час</p>
+                       </td>
+                   </tr>
+                   <tr >
+                       <td class="5" colspan="1">Пятница</td>
+                       <td class="5">
+                           <p>Численные методы</p>
+                           <p>Визуалка</p>
+                           <p>Философия</p>
+                       </td>
+                   </tr>
+                   </tbody>
+               </table>
+
+           </div>
+
+           <div class="col-md-6">
+               <table id="calendar2">
+                   <thead>
+                   <tr><td>‹<td colspan="5"><td>›
+                   <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+                   <tbody>
+               </table>
+           </div>
+
+   </div>
+   </div>
+   </body>
+   <script>
+       function Calendar2(id, year, month) {
+           var Dlast = new Date(year,month+1,0).getDate(),
+               D = new Date(year,month,Dlast),
+
+               DNlast = new Date(D.getFullYear(),D.getMonth(),Dlast).getDay(),
+               DNfirst = new Date(D.getFullYear(),D.getMonth(),1).getDay(),
+               calendar = '<tr>',
+               month=["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
+           if (DNfirst !== 0) {
+               for(var  i = 1; i < DNfirst; i++) calendar += '<td>';
+           }else{
+               for(var  i = 0; i < 7; i++) calendar += '<td>';
+           }
+           for(var  i = 1; i <= Dlast; i++) {
+               if (i === new Date().getDate() && D.getFullYear() === new Date().getFullYear() && D.getMonth() === new Date().getMonth()) {
+                   calendar += '<td class="today">' + i;
+
+               }else{
+                   calendar += '<td>' + i;
+               }
+               if (new Date(D.getFullYear(),D.getMonth(),i).getDay() === 0) {
+                   calendar += '<tr>';
+               }
+           }
+           for(var  i = DNlast; i < 7; i++) calendar += '<td>&nbsp;';
+           document.querySelector('#'+id+' tbody').innerHTML = calendar;
+           document.querySelector('#'+id+' thead td:nth-child(2)').innerHTML = month[D.getMonth()] +' '+ D.getFullYear();
+           document.querySelector('#'+id+' thead td:nth-child(2)').dataset.month = D.getMonth();
+           document.querySelector('#'+id+' thead td:nth-child(2)').dataset.year = D.getFullYear();
+           if (document.querySelectorAll('#'+id+' tbody tr').length < 6) {  // чтобы при перелистывании месяцев не "подпрыгивала" вся страница, добавляется ряд пустых клеток. Итог: всегда 6 строк для цифр
+               document.querySelector('#'+id+' tbody').innerHTML += '<tr><td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;';
+
+
+
+           }
+           var d = new Date();
+           var day = d.getDay();
+           $("."+day).css("background-color","#152b4f")
+       }
+       Calendar2("calendar2", new Date().getFullYear(), new Date().getMonth());
+
+
+   </script>
+
+</html>
